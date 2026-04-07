@@ -1,0 +1,102 @@
+<div class="mb-6">
+  <div>
+    <h1 class="text-lg font-semibold text-[#e8edf5] tracking-[-0.5px] md:text-[22px]">{{ isEdit ? 'Edit employee' : 'Add employee' }}</h1>
+    <p class="text-xs text-[#4f5b6e] mt-0.5 md:text-[13px]">{{ isEdit ? 'Update the details below' : 'Fill in the details below' }}</p>
+  </div>
+</div>
+
+<div class="bg-[#161b27] border border-[#1e2535] rounded-xl p-5 md:p-7">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="grid grid-cols-1 gap-[14px] md:grid-cols-2 md:gap-4">
+
+      <div class="flex flex-col gap-1.5">
+        <label class="text-[10px] font-medium text-[#4f5b6e] uppercase tracking-[0.5px] md:text-[11px]">First name</label>
+        <input class="bg-[#0f1117] border border-[#1e2535] rounded-lg py-[9px] px-3 text-[#c8d0dc] text-[13px] outline-none transition-colors duration-150 [font-family:inherit] w-full focus:border-[#4f8ef7] md:py-[10px] md:px-[13px]"
+               formControlName="firstName" placeholder="Nkateko"
+               [class.error]="f['firstName'].touched && f['firstName'].invalid" />
+        @if (f['firstName'].touched && f['firstName'].hasError('required')) {
+          <span class="text-[10px] text-[#f87171] md:text-[11px]">
+            First name is required
+          </span>
+        }
+      </div>
+
+      <div class="flex flex-col gap-1.5">
+        <label class="text-[10px] font-medium text-[#4f5b6e] uppercase tracking-[0.5px] md:text-[11px]">Last name</label>
+        <input class="bg-[#0f1117] border border-[#1e2535] rounded-lg py-[9px] px-3 text-[#c8d0dc] text-[13px] outline-none transition-colors duration-150 [font-family:inherit] w-full focus:border-[#4f8ef7] md:py-[10px] md:px-[13px]"
+               formControlName="lastName" placeholder="Mthembu"
+               [class.error]="f['lastName'].touched && f['lastName'].invalid" />
+        @if (f['lastName'].touched && f['lastName'].hasError('required')) {
+          <span class="text-[10px] text-[#f87171] md:text-[11px]">
+            Last name is required
+          </span>
+        }
+      </div>
+
+      <div class="flex flex-col gap-1.5 col-span-full">
+        <label class="text-[10px] font-medium text-[#4f5b6e] uppercase tracking-[0.5px] md:text-[11px]">Email address</label>
+        <input class="bg-[#0f1117] border border-[#1e2535] rounded-lg py-[9px] px-3 text-[#c8d0dc] text-[13px] outline-none transition-colors duration-150 [font-family:inherit] w-full focus:border-[#4f8ef7] md:py-[10px] md:px-[13px]"
+               formControlName="email" placeholder="nkateko@company.com"
+               [class.error]="f['email'].touched && f['email'].invalid" />
+        @if (f['email'].touched && f['email'].hasError('email')) {
+          <span class="text-[10px] text-[#f87171] md:text-[11px]">
+            Enter a valid email address
+          </span>
+        }
+      </div>
+
+      <div class="flex flex-col gap-1.5">
+        <label class="text-[10px] font-medium text-[#4f5b6e] uppercase tracking-[0.5px] md:text-[11px]">Job Title</label>
+        <input class="bg-[#0f1117] border border-[#1e2535] rounded-lg py-[9px] px-3 text-[#c8d0dc] text-[13px] outline-none transition-colors duration-150 [font-family:inherit] w-full focus:border-[#4f8ef7] md:py-[10px] md:px-[13px]"
+               formControlName="jobTitle" placeholder="Senior Developer"
+               [class.error]="f['jobTitle'].touched && f['jobTitle'].invalid" />
+        @if (f['jobTitle'].touched && f['jobTitle'].hasError('required')) {
+          <span class="text-[10px] text-[#f87171] md:text-[11px]">
+            Job title is required
+          </span>
+        }
+      </div>
+
+      <div class="flex flex-col gap-1.5">
+        <label class="text-[10px] font-medium text-[#4f5b6e] uppercase tracking-[0.5px] md:text-[11px]">Hire Date</label>
+        <input type="date" class="bg-[#0f1117] border border-[#1e2535] rounded-lg py-[9px] px-3 text-[#c8d0dc] text-[13px] outline-none transition-colors duration-150 [font-family:inherit] w-full focus:border-[#4f8ef7] md:py-[10px] md:px-[13px]"
+               formControlName="hireDate"
+               [class.error]="f['hireDate'].touched && f['hireDate'].invalid" />
+        @if (f['hireDate'].touched && f['hireDate'].hasError('required')) {
+          <span class="text-[10px] text-[#f87171] md:text-[11px]">
+            Hire date is required
+          </span>
+        }
+      </div>
+
+      <div class="flex flex-col gap-1.5">
+        <label class="text-[10px] font-medium text-[#4f5b6e] uppercase tracking-[0.5px] md:text-[11px]">Department</label>
+        <select class="bg-[#0f1117] border border-[#1e2535] rounded-lg py-[9px] px-3 text-[#c8d0dc] text-[13px] outline-none transition-colors duration-150 [font-family:inherit] w-full focus:border-[#4f8ef7] md:py-[10px] md:px-[13px]"
+                formControlName="department"
+                [class.error]="f['department'].touched && f['department'].invalid">
+          <option value="">Select department</option>
+          @for (d of departments; track d) {
+            <option [value]="d">{{ d }}</option>
+          }
+        </select>
+        @if (f['department'].touched && f['department'].hasError('required')) {
+          <span class="text-[10px] text-[#f87171] md:text-[11px]">
+            Select a department
+          </span>
+        }
+      </div>
+
+    </div>
+
+    <div class="flex flex-col justify-end gap-[10px] mt-5 md:flex-row">
+      <button type="button"
+              class="bg-transparent border border-[#1e2535] text-[#8892a4] py-[9px] px-[18px] rounded-lg text-xs cursor-pointer [font-family:inherit] w-full text-center hover:border-[#2a3550] hover:text-[#c8d0dc] md:w-auto md:text-[13px]"
+              (click)="cancel()">Cancel</button>
+      <button type="submit"
+              class="bg-[#4f8ef7] text-white border-0 py-[9px] px-[18px] rounded-lg text-xs font-medium cursor-pointer [font-family:inherit] w-full text-center hover:bg-[#3a7bf0] disabled:opacity-50 disabled:cursor-not-allowed md:w-auto md:text-[13px]"
+              [disabled]="saving">
+        {{ saving ? 'Saving...' : (isEdit ? 'Update employee' : 'Save employee') }}
+      </button>
+    </div>
+  </form>
+</div>
