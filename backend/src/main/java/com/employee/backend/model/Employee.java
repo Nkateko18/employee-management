@@ -38,6 +38,7 @@ public class Employee {
     private LocalDate hireDate;
 
     @Column(nullable = false)
+    @Builder.Default
     private boolean isActive = true;
 
 }
