@@ -2,12 +2,14 @@ package com.employee.backend.dto;
 
 import lombok.Builder;
 import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import java.time.LocalDate;
 
 @Data
 @Builder
+@JsonPropertyOrder({"id", "firstName", "lastName", "email", "jobTitle", "department", "hireDate", "isActive"})
 public class EmployeeResponse {
-    
+
     private Long id;
     private String firstName;
     private String lastName;
