@@ -53,6 +53,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .lastName(request.getLastName())
                 .email(request.getEmail())
                 .jobTitle(request.getJobTitle())
+                .role(request.getRole() != null ? request.getRole() : "reader")
                 .department(request.getDepartment())
                 .hireDate(request.getHireDate())
                 .isActive(true)
@@ -81,6 +82,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setLastName(request.getLastName());
         employee.setEmail(request.getEmail());
         employee.setJobTitle(request.getJobTitle());
+        employee.setRole(request.getRole() != null ? request.getRole() : employee.getRole());
         employee.setDepartment(request.getDepartment());
         employee.setHireDate(request.getHireDate());
         employee.setActive(request.isActive());
@@ -119,6 +121,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .lastName(employee.getLastName())
                 .email(employee.getEmail())
                 .jobTitle(employee.getJobTitle())
+                .role(employee.getRole() != null ? employee.getRole() : "reader")
                 .department(employee.getDepartment())
                 .hireDate(employee.getHireDate())
                 .isActive(employee.isActive())

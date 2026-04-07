@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, TitleCasePipe } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { EmployeeService } from '../../../core/services/employee.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-employee-form',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, TitleCasePipe],
   templateUrl: './employee-form.html',
   styleUrl: './employee-form.css',
 })
@@ -17,6 +17,7 @@ export class EmployeeForm {
   saving = false;
 
   departments = ['Engineering', 'HR', 'Finance', 'Operations'];
+  roles = ['admin', 'manager', 'reader'];
 
   constructor(
     private fb: FormBuilder,
@@ -32,7 +33,8 @@ export class EmployeeForm {
       email:      ['', [Validators.required, Validators.email]],
       department: ['', Validators.required],
       jobTitle:   ['', Validators.required],
-      hireDate:   ['', Validators.required]
+      hireDate:   ['', Validators.required],
+      role:       ['reader', Validators.required]
     });
 
     const id = this.route.snapshot.paramMap.get('id');

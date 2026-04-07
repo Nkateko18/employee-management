@@ -86,6 +86,22 @@
         }
       </div>
 
+      <div class="flex flex-col gap-1.5">
+        <label class="text-[10px] font-medium text-[#4f5b6e] uppercase tracking-[0.5px] md:text-[11px]">Role</label>
+        <select class="bg-[#0f1117] border border-[#1e2535] rounded-lg py-[9px] px-3 text-[#c8d0dc] text-[13px] outline-none transition-colors duration-150 [font-family:inherit] w-full focus:border-[#4f8ef7] md:py-[10px] md:px-[13px]"
+                formControlName="role"
+                [class.error]="f['role'].touched && f['role'].invalid">
+          @for (r of roles; track r) {
+            <option [value]="r">{{ r | titlecase }}</option>
+          }
+        </select>
+        @if (f['role'].touched && f['role'].hasError('required')) {
+          <span class="text-[10px] text-[#f87171] md:text-[11px]">
+            Select a role
+          </span>
+        }
+      </div>
+
     </div>
 
     <div class="flex flex-col justify-end gap-[10px] mt-5 md:flex-row">

@@ -32,6 +32,10 @@ public class Employee {
     @Column(nullable = false)
     private String jobTitle;
 
+    @Column(nullable = true)
+    @Builder.Default
+    private String role = "reader";
+
     @Column(nullable = false)
     private String department;
 

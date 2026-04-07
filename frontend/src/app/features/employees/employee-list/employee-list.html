@@ -3,7 +3,9 @@
         <h1 class="text-xl font-semibold text-[#e8edf5] tracking-[-0.5px] md:text-[22px]">Employees</h1>
         <p class="text-xs text-[#4f5b6e] mt-0.5 md:text-[13px]">Manage your employees here.</p>
     </div>
-    <a routerLink="/add" class="bg-[#4f8ef7] text-white py-[9px] px-[18px] text-xs font-medium rounded-lg no-underline inline-block cursor-pointer transition-colors duration-150 w-full text-center hover:bg-[#3a7bf0] md:w-auto md:text-[13px]">Add Employee</a>
+    <ng-container *appAdminOnly>
+      <a routerLink="/add" class="bg-[#4f8ef7] text-white py-[9px] px-[18px] text-xs font-medium rounded-lg no-underline inline-block cursor-pointer transition-colors duration-150 w-full text-center hover:bg-[#3a7bf0] md:w-auto md:text-[13px]">Add Employee</a>
+    </ng-container>
 </div>
 
 @if (error) {
@@ -32,6 +34,7 @@
             <th class="py-[11px] px-3 text-[11px] font-medium text-[#4f5b6e] uppercase tracking-[0.6px] border-b border-[#1e2535] bg-[#13181f] text-left md:px-4 md:text-[13px]">Employee</th>
             <th class="py-[11px] px-3 text-[11px] font-medium text-[#4f5b6e] uppercase tracking-[0.6px] border-b border-[#1e2535] bg-[#13181f] text-left md:px-4 md:text-[13px]">Department</th>
             <th class="py-[11px] px-3 text-[11px] font-medium text-[#4f5b6e] uppercase tracking-[0.6px] border-b border-[#1e2535] bg-[#13181f] text-left md:px-4 md:text-[13px]">Job Title</th>
+            <th class="py-[11px] px-3 text-[11px] font-medium text-[#4f5b6e] uppercase tracking-[0.6px] border-b border-[#1e2535] bg-[#13181f] text-left md:px-4 md:text-[13px]">Role</th>
             <th class="py-[11px] px-3 text-[11px] font-medium text-[#4f5b6e] uppercase tracking-[0.6px] border-b border-[#1e2535] bg-[#13181f] text-left md:px-4 md:text-[13px]">Hire Date</th>
             <th class="py-[11px] px-3 text-[11px] font-medium text-[#4f5b6e] uppercase tracking-[0.6px] border-b border-[#1e2535] bg-[#13181f] text-left md:px-4 md:text-[13px]">Actions</th>
           </tr>
@@ -46,12 +49,25 @@
               <td class="py-3 px-3 text-xs text-[#c8dbdc] border-b border-[#1a1f2b] md:py-[13px] md:px-4 md:text-[13px]">
                 <span class="bg-[#1e2939] text-[#4f8ef7] py-1 px-2 rounded-[6px] text-[11px] inline-block whitespace-nowrap">{{ employee.department }}</span>
               </td>
-              <td class="py-3 px-3 text-xs text-[#c8dbdc] border-b border-[#1a1f2b] hidden lg:table-cell md:py-[13px] md:px-4 md:text-[13px]">{{ employee.jobTitle }}</td>
+              <td class="py-3 px-3 text-xs text-[#c8dbdc] border-b border-[#1a1f2b] md:py-[13px] md:px-4 md:text-[13px]">{{ employee.jobTitle }}</td>
+              <td class="py-3 px-3 text-xs text-[#c8dbdc] border-b border-[#1a1f2b] md:py-[13px] md:px-4 md:text-[13px]">
+                <span class="py-1 px-2 rounded-[6px] text-[11px] inline-block whitespace-nowrap capitalize"
+                  [class.bg-red-900]="employee.role === 'admin'"
+                  [class.text-red-300]="employee.role === 'admin'"
+                  [class.bg-yellow-900]="employee.role === 'manager'"
+                  [class.text-yellow-300]="employee.role === 'manager'"
+                  [class.bg-slate-800]="employee.role === 'reader' || !employee.role"
+                  [class.text-slate-400]="employee.role === 'reader' || !employee.role">
+                  {{ employee.role || 'reader' }}
+                </span>
+              </td>
               <td class="py-3 px-3 text-xs text-[#c8dbdc] border-b border-[#1a1f2b] md:py-[13px] md:px-4 md:text-[13px]">{{ employee.hireDate | date }}</td>
               <td class="py-3 px-3 text-xs text-[#c8dbdc] border-b border-[#1a1f2b] md:py-[13px] md:px-4 md:text-[13px]">
                 <div class="flex gap-1.5">
-                  <a [routerLink]="['/edit', employee.id]" class="bg-transparent border border-[#2a3f60] text-[#4f8ef7] py-1 px-3 rounded-[6px] text-xs cursor-pointer no-underline inline-block hover:bg-[#1a2640]">Edit</a>
-                  <button (click)="delete(employee.id)" class="bg-transparent border border-[#3d1f1f] text-[#f87171] py-1 px-3 rounded-[6px] text-xs cursor-pointer hover:bg-[#2a1515]">Delete</button>
+                  <ng-container *appAdminOnly>
+                    <a [routerLink]="['/edit', employee.id]" class="bg-transparent border border-[#2a3f60] text-[#4f8ef7] py-1 px-3 rounded-[6px] text-xs cursor-pointer no-underline inline-block hover:bg-[#1a2640]">Edit</a>
+                    <button (click)="delete(employee.id)" class="bg-transparent border border-[#3d1f1f] text-[#f87171] py-1 px-3 rounded-[6px] text-xs cursor-pointer hover:bg-[#2a1515]">Delete</button>
+                  </ng-container>
                 </div>
               </td>
             </tr>

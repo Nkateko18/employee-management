@@ -1,9 +1,22 @@
+<div class="bg-[#161b27] min-h-screen">
 <nav class="bg-[#161b27] border-b border-[#1e2535] px-4 h-14 flex items-center justify-between md:px-8">
   <div class="text-sm font-semibold text-white tracking-[-0.3px] md:text-base">Staff <span class="text-[#4f8ef7]">Management</span></div>
-  <div>
+  <div class="flex items-center gap-4">
     <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="text-[#8892a4] no-underline text-xs font-medium py-[6px] px-[10px] rounded-[6px] transition-colors duration-150 md:text-[13px] md:px-3 hover:text-[#e8edf5] hover:bg-[#1e2535] [&.active]:text-[#e8edf5] [&.active]:bg-[#1e2535]">Employees</a>
+    <div class="flex items-center gap-2">
+      <span class="text-[11px] text-[#4f5b6e]">Viewing as:</span>
+      <select
+        [value]="roleService.currentRole()"
+        (change)="roleService.setRole($any($event.target).value)"
+        class="bg-[#0f1117] border border-[#1e2535] rounded-[6px] text-[#8892a4] text-xs py-1 px-2 outline-none cursor-pointer focus:border-[#4f8ef7]">
+        @for (r of roles; track r) {
+          <option [value]="r">{{ r | titlecase }}</option>
+        }
+      </select>
+    </div>
   </div>
 </nav>
 <main class="max-w-[1100px] mx-auto py-5 md:py-8 md:px-6">
   <router-outlet></router-outlet>
 </main>
+</div>

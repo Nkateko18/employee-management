@@ -29,5 +29,7 @@ public class EmployeeRequest {
     @PastOrPresent(message = "Hire date cannot be in the future")
     private LocalDate hireDate;
 
+    private String role = "reader";
+
     private boolean isActive = true;
 }

@@ -4,10 +4,11 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { Employees } from '../../../core/models/employee.model';
 import { EmployeeService } from '../../../core/services/employee.service';
+import { AdminOnlyDirective } from '../../../core/directives/admin-only.directive';
 
 @Component({
   selector: 'app-employee-list',
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule, AdminOnlyDirective],
   templateUrl: './employee-list.html',
   styleUrl: './employee-list.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

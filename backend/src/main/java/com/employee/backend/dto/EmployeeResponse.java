@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 @Data
 @Builder
-@JsonPropertyOrder({"id", "firstName", "lastName", "email", "jobTitle", "department", "hireDate", "isActive"})
+@JsonPropertyOrder({"id", "firstName", "lastName", "email", "jobTitle", "role", "department", "hireDate", "isActive"})
 public class EmployeeResponse {
 
     private Long id;
@@ -15,6 +15,7 @@ public class EmployeeResponse {
     private String lastName;
     private String email;
     private String jobTitle;
+    private String role;
     private String department;
     private LocalDate hireDate;
     private boolean isActive;
