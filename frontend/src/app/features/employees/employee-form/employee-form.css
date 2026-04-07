@@ -1,0 +1,4 @@
+/* Dynamic error-state override for [class.error] binding on form inputs */
+.error {
+    border-color: #f87171;
+}
