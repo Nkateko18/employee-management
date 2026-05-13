@@ -1,5 +1,5 @@
 import { Directive, effect, inject, TemplateRef, ViewContainerRef } from '@angular/core';
-import { RoleService } from '../services/role.service';
+import { AuthService } from '../services/auth.service';
 
 @Directive({
   selector: '[appAdminOnly]',
@@ -8,12 +8,12 @@ import { RoleService } from '../services/role.service';
 export class AdminOnlyDirective {
   private templateRef = inject(TemplateRef<unknown>);
   private viewContainer = inject(ViewContainerRef);
-  private roleService = inject(RoleService);
+  private auth = inject(AuthService);
 
   constructor() {
     effect(() => {
       this.viewContainer.clear();
-      if (this.roleService.isAdmin()) {
+      if (this.auth.isAdmin()) {
         this.viewContainer.createEmbeddedView(this.templateRef);
       }
     });

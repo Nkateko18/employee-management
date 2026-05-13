@@ -3,17 +3,23 @@
   <div class="text-sm font-semibold text-white tracking-[-0.3px] md:text-base">Staff <span class="text-[#4f8ef7]">Management</span></div>
   <div class="flex items-center gap-4">
     <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="text-[#8892a4] no-underline text-xs font-medium py-[6px] px-[10px] rounded-[6px] transition-colors duration-150 md:text-[13px] md:px-3 hover:text-[#e8edf5] hover:bg-[#1e2535] [&.active]:text-[#e8edf5] [&.active]:bg-[#1e2535]">Employees</a>
-    <div class="flex items-center gap-2">
-      <span class="text-[11px] text-[#4f5b6e]">Viewing as:</span>
-      <select
-        [value]="roleService.currentRole()"
-        (change)="roleService.setRole($any($event.target).value)"
-        class="bg-[#0f1117] border border-[#1e2535] rounded-[6px] text-[#8892a4] text-xs py-1 px-2 outline-none cursor-pointer focus:border-[#4f8ef7]">
-        @for (r of roles; track r) {
-          <option [value]="r">{{ r | titlecase }}</option>
-        }
-      </select>
-    </div>
+
+    @if (auth.isLoggedIn()) {
+      <div class="flex items-center gap-2.5">
+        <span class="text-[11px] text-[#4f5b6e] hidden md:inline">{{ auth.currentUser()?.username }}</span>
+        <span class="bg-red-900 text-red-300 text-[10px] py-0.5 px-2 rounded-[5px] font-medium">Admin</span>
+        <button
+          (click)="auth.logout()"
+          class="bg-transparent border border-[#1e2535] text-[#8892a4] text-xs py-[5px] px-[10px] rounded-[6px] cursor-pointer hover:border-[#2a3550] hover:text-[#c8d0dc]">
+          Sign out
+        </button>
+      </div>
+    } @else {
+      <a routerLink="/login"
+         class="bg-[#4f8ef7] text-white text-xs font-medium py-[6px] px-[14px] rounded-[6px] no-underline hover:bg-[#3a7bf0]">
+        Sign in
+      </a>
+    }
   </div>
 </nav>
 <main class="max-w-[1100px] mx-auto py-5 md:py-8 md:px-6">
