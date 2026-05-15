@@ -22,20 +22,20 @@ public class RateLimitingFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        String clientIp = httpRequest.getRemoteAddr();
+        String clientIp = request.getRemoteAddr();
 
-        Bucket bucket = cache.computeIfAbsent(clientIp, k -> createNewBucket());
+        Bucket bucket = buckets.computeIfAbsent(clientIp, k -> createNewBucket());
         if (bucket.tryConsume(1)) {
             chain.doFilter(request, response);
         } else {
             HttpServletResponse httpResponse = (HttpServletResponse) response;
-            httpResponse.setStatus(HttpStatus.TOO_MANY_REQUESTS.value());
+            httpResponse.setStatus(429);
             httpResponse.getWriter().write("Too many requests. Please try again later.");
         }
     }
 
     private Bucket createNewBucket() {
-        BandWith limit = Bandwidth.classic(100, Refill.intervally(100, Duration.ofMinutes(1)));
+        Bandwidth limit = Bandwidth.classic(100, Refill.intervally(100, Duration.ofMinutes(1)));
         return Bucket4j.builder().addLimit(limit).build();
     }
 }
