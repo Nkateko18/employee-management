@@ -3,6 +3,7 @@ package com.employee.backend.controller;
 import com.employee.backend.dto.LoginRequest;
 import com.employee.backend.dto.LoginResponse;
 import com.employee.backend.security.JwtUtils;
+import com.employee.backend.util.InputSanitizer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -26,9 +27,11 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
         log.info("Login attempt for user: {}", request.getUsername());
+        String username = InputSanitizer.sanitize(request.getUsername());
+        String password = request.getPassword();
 
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
+                new UsernamePasswordAuthenticationToken(username, password)
         );
 
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();

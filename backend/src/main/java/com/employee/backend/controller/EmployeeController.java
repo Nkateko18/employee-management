@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import com.employee.backend.util.InputSanitizer;
 
 @RestController
 @RequestMapping("/api/employees")
@@ -36,6 +37,7 @@ public class EmployeeController {
     @PostMapping
     public ResponseEntity<EmployeeResponse> createEmployee(@Valid @RequestBody EmployeeRequest request) {
         log.info("Received request to create employee with email: {}", request.getEmail());
+        sanitizeRequest(request);
         EmployeeResponse createdEmployee = employeeService.createEmployee(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdEmployee);
     }
@@ -43,6 +45,7 @@ public class EmployeeController {
     @PutMapping("/{id}")
     public ResponseEntity<EmployeeResponse> updateEmployee(@PathVariable Long id, @Valid @RequestBody EmployeeRequest request) {
         log.info("Received request to update employee with id: {}", id);
+        sanitizeRequest(request);
         EmployeeResponse updatedEmployee = employeeService.updateEmployee(id, request);
         return ResponseEntity.ok(updatedEmployee);
     }
@@ -59,6 +62,14 @@ public class EmployeeController {
         log.info("Received search request with query: {}", query);
         List<EmployeeResponse> results = employeeService.searchEmployees(query);
         return ResponseEntity.ok(results);
+    }
+
+    public void sanitizeRequest(EmployeeRequest request) {
+        request.setFirstName(InputSanitizer.sanitize(request.getFirstName()));
+        request.setLastName(InputSanitizer.sanitize(request.getLastName()));
+        request.setJobTitle(InputSanitizer.sanitize(request.getJobTitle()));
+        request.setDepartment(InputSanitizer.sanitize(request.getDepartment()));
+        request.setRole(InputSanitizer.sanitize(request.getRole()));
     }
 
 }
